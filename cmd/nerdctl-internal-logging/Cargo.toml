@@ -1,0 +1,21 @@
+[package]
+name = "nerdctl-internal-logging"
+version = "0.0.1"
+authors = ["phus.lu@gmail.com"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+libc = "0.2"
+errno = "*"
+
+[profile.release]
+opt-level = "z"     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+panic = "abort"     # Abort on panic
+strip = true        # Automatically strip symbols from the binary.
+
+[[bin]]
+name="nerdctl-internal-logging"
+path = "main.rs"
