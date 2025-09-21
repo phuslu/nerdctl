@@ -556,6 +556,10 @@ func GenerateLogURI(dataStore string) (*url.URL, error) {
 	if err != nil {
 		return nil, err
 	}
+	shimExe := selfExe + "-internal-logging"
+	if fi, err := os.Stat(shimExe); err == nil && (fi.Mode().Perm()&0111) != 0 {
+		selfExe = shimExe
+	}
 	args := map[string]string{
 		logging.MagicArgv1: dataStore,
 	}
